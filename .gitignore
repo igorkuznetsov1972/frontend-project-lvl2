@@ -2,3 +2,7 @@ node_modules
 *.log
 dist
 coverage
+.eslintrc.js
+test.js
+file1.json
+file2.json
