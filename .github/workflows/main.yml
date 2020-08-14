@@ -1,4 +1,4 @@
-name: Run linter and jest
+name: Run linter and jest, report code coverage
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -33,3 +33,10 @@ jobs:
 
     - name: Run Jest tests
       run: make test
+    - name: publish code coverage
+      uses: paambaati/codeclimate-action@v2.6.0
+      env:
+        CC_TEST_REPORTER_ID: 542094b2ff8c38b9b28158cfae3629303f769393a1a9001c4e4f3815664ad84a
+      with:
+        coverageCommand: make test-coverage
+        debug: true
