@@ -7,10 +7,10 @@ install-deps:
 	npm ci
 
 test:
-	npx -n --experimental-vm-modules jest
+	npm test
 
 test-coverage:
-	np test -- --coverage --coverageProvider=v8
+	npm test -- --coverage --coverageProvider=v8
 
 lint:
 	npx eslint .
