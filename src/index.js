@@ -23,6 +23,8 @@ const gendiffCore = (filepath1, filepath2) => {
     }
   });
   const diffFile = _.toPairs(result).map((x) => x.join(': '));
-  console.log(diffFile.join('\n'));
+  const diffFilePrintable = diffFile.join('\n');
+  console.log(diffFilePrintable);
+  return diffFilePrintable;
 };
 export default gendiffCore;
