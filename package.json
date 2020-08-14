@@ -5,6 +5,10 @@
   "scripts": {
     "test": "npx -n --experimental-vm-modules jest"
   },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {}
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/igorkuznetsov1972/frontend-project-lvl2.git"
@@ -25,8 +29,9 @@
   },
   "homepage": "https://github.com/igorkuznetsov1972/frontend-project-lvl2#readme",
   "dependencies": {
+    "@jest/globals": "^26.1.0",
     "commander": "^6.0.0",
-    "eslint-plugin-jest": "^23.18.0",
+    "eslint-plugin-jest": "^23.20.0",
     "jest": "^26.1.0",
     "jest-cli": "^26.1.0",
     "lodash": "^4.17.19"
