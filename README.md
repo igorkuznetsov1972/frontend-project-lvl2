@@ -6,4 +6,4 @@ This repository is created as a second training project by Igor Kuznetsov studyi
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/791411c2edebbac2b3d9/maintainability)](https://codeclimate.com/github/igorkuznetsov1972/frontend-project-lvl2/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/791411c2edebbac2b3d9/test_coverage)](https://codeclimate.com/github/igorkuznetsov1972/frontend-project-lvl2/test_coverage)
-[![Linter&Tests](https://github.com/igorkuznetsov1972/frontend-project-lvl2/workflows/LinterJestCoverage/badge.svg)](https://github.com/igorkuznetsov1972/frontend-project-lvl2/actions?query=workflow%3ALinterJestCoverage)
+[![Linter&Tests](https://github.com/igorkuznetsov1972/frontend-project-lvl2/workflows/LinterJestCoverage/badge.svg?branch=master)](https://github.com/igorkuznetsov1972/frontend-project-lvl2/actions?query=workflow%3ALinterJestCoverage)
