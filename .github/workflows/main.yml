@@ -36,7 +36,7 @@ jobs:
     - name: publish code coverage
       uses: paambaati/codeclimate-action@v2.6.0
       env:
-        CC_TEST_REPORTER_ID: 542094b2ff8c38b9b28158cfae3629303f769393a1a9001c4e4f3815664ad84a
+        CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_ID }}
       with:
         coverageCommand: make test-coverage
         debug: true
