@@ -23,6 +23,12 @@ test('Yaml files difference', () => {
   const result = readFile('result.txt');
   expect(gendiffCore(filepath1, filepath2)).toEqual(result);
 });
+test('ini files difference', () => {
+  const filepath1 = getFixturePath('file1.ini');
+  const filepath2 = getFixturePath('file2.ini');
+  const result = readFile('result.txt');
+  expect(gendiffCore(filepath1, filepath2)).toEqual(result);
+});
 test('Wrong file type', () => {
   const filepath1 = getFixturePath('file1.txt');
   const filepath2 = getFixturePath('file2.txt');
