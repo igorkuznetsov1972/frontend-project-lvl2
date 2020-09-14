@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/igorkuznetsov1972/frontend-project-lvl2#readme",
   "dependencies": {
+    "@ghostff/ini_parser": "^1.0.1",
     "@jest/globals": "^26.1.0",
     "commander": "^6.0.0",
     "coverage": "^0.4.1",
