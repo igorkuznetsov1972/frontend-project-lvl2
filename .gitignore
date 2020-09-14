@@ -4,3 +4,7 @@ dist
 coverage
 .eslintrc.js
 test.js
+result1.json
+result2.json
+astPrintable.js
+.vscode
