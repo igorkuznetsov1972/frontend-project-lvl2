@@ -1,6 +1,6 @@
 import fs from 'fs';
 import yaml from 'js-yaml';
-import ini from 'ini';
+import ini from '@ghostff/ini_parser';
 import path from 'path';
 
 export default (filepath) => {
@@ -12,7 +12,7 @@ export default (filepath) => {
       return yaml.safeLoad(fs.readFileSync(filepath, 'UTF-8'));
     }
     if (path.extname(filepath) === '.ini') {
-      return ini.parse(fs.readFileSync(filepath, 'UTF-8'));
+      return ini.parseSync(filepath, true, true);
     }
     throw new Error('Invalid file type');
   }
