@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-commented-out-tests */
 /* eslint-disable no-underscore-dangle */
 // eslint-disable-next-line import/extensions
 import { fileURLToPath } from 'url';
@@ -28,7 +29,7 @@ test('ini files difference', () => {
   const filepath2 = getFixturePath('nestedFile2.ini');
   const nestedResult = readFile('nestedResult.txt');
   expect(gendiffCore(filepath1, filepath2)).toEqual(nestedResult);
-}); 
+}); */
 test('Wrong file type', () => {
   const filepath1 = getFixturePath('nestedFile1.txt');
   const filepath2 = getFixturePath('nestedFile2.txt');
@@ -42,4 +43,11 @@ test('No such file', () => {
   expect(() => {
     gendiffCore(filepath1, filepath2);
   }).toThrow('No such file or directory');
-}); */
+});
+test('Invalid formatter type', () => {
+  const filepath1 = getFixturePath('nestedFile1.json');
+  const filepath2 = getFixturePath('nestedFile2.json');
+  expect(() => {
+    gendiffCore(filepath1, filepath2, 'other');
+  }).toThrow('Invalid formatter type');
+});
