@@ -17,3 +17,6 @@ Here is how it works with YAMLs\
 
 Here is how it works with ini files\
 <a href="https://asciinema.org/a/DSS949gdX9AjqARq5w8Aumf4e" target="_blank"><img src="https://asciinema.org/a/DSS949gdX9AjqARq5w8Aumf4e.svg" width="500" /></a>
+
+Here is how it works with nested JSON's files and formatter option\
+<a href="https://asciinema.org/a/asHDSA7MfEm301zSS5j3j4vNM" target="_blank"><img src="https://asciinema.org/a/asHDSA7MfEm301zSS5j3j4vNM.svg" width="500" /></a>
