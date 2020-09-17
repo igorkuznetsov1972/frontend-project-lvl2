@@ -12,7 +12,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
-test('Nested JSON files difference', () => {
+test('Nested JSON files difference, stylish default formatter', () => {
   const filepath1 = getFixturePath('nestedFile1.json');
   const filepath2 = getFixturePath('nestedFile2.json');
   const nestedResult = readFile('nestedResult.txt');
@@ -56,4 +56,10 @@ test('Invalid formatter type', () => {
   expect(() => {
     gendiffCore(filepath1, filepath2, 'other');
   }).toThrow('Invalid formatter type');
+});
+test('Nested JSON files difference, plain formatter', () => {
+  const filepath1 = getFixturePath('nestedFile1.json');
+  const filepath2 = getFixturePath('nestedFile2.json');
+  const nestedPlainResult = readFile('plainResult.txt');
+  expect(gendiffCore(filepath1, filepath2, 'plain')).toEqual(nestedPlainResult);
 });
