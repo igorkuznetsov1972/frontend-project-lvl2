@@ -1,9 +1,9 @@
 /* eslint-disable import/extensions */
 /* eslint-disable no-console */
-import parseFile from './parsers.js';
-import genAST from './genAST.js';
-import stylish from '../formatters/stylish.js';
-import plain from '../formatters/plain.js';
+import parseFile from '../src/parsers.js';
+import genAST from '../src/genAST.js';
+import stylish from './stylish.js';
+import plain from './plain.js';
 
 const gendiffCore = (filepath1, filepath2, formatter = 'stylish') => {
   const file1 = parseFile(filepath1);

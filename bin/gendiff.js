@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 import commander from 'commander';
 // eslint-disable-next-line import/extensions
-import gendiffCore from '../src/index.js';
+import gendiffCore from '../formatters/index.js';
 
 const { program } = commander;
 
