@@ -20,3 +20,6 @@ Here is how it works with ini files\
 
 Here is how it works with nested JSON's files and formatter option\
 <a href="https://asciinema.org/a/asHDSA7MfEm301zSS5j3j4vNM" target="_blank"><img src="https://asciinema.org/a/asHDSA7MfEm301zSS5j3j4vNM.svg" width="500" /></a>
+
+Here is how it works with nested JSON's files and plain formatter\
+<a href="https://asciinema.org/a/pIookL4KjhBGlKqLD4ObI2s3I" target="_blank"><img src="https://asciinema.org/a/pIookL4KjhBGlKqLD4ObI2s3I.svg" width="500" /></a>
