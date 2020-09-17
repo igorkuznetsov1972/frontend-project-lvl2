@@ -6,7 +6,8 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
 import { test, expect } from '@jest/globals';
-import gendiffCore from '../src/index';
+// eslint-disable-next-line import/extensions
+import gendiffCore from '../formatters/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
