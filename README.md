@@ -23,3 +23,6 @@ Here is how it works with nested JSON's files and formatter option\
 
 Here is how it works with nested JSON's files and plain formatter\
 <a href="https://asciinema.org/a/pIookL4KjhBGlKqLD4ObI2s3I" target="_blank"><img src="https://asciinema.org/a/pIookL4KjhBGlKqLD4ObI2s3I.svg" width="500" /></a>
+
+Here is how it works with nested JSON's files and JSON formatter\
+<a href="https://asciinema.org/a/M0SxuwdXHya2J5471NAyUOWMh" target="_blank"><img src="https://asciinema.org/a/M0SxuwdXHya2J5471NAyUOWMh.svg" width="500" /></a>
