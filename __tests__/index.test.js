@@ -64,3 +64,9 @@ test('Nested JSON files difference, plain formatter', () => {
   const nestedPlainResult = readFile('plainResult.txt');
   expect(gendiffCore(filepath1, filepath2, 'plain')).toEqual(nestedPlainResult);
 });
+test('Nested JSON files difference, json formatter', () => {
+  const filepath1 = getFixturePath('nestedFile1.json');
+  const filepath2 = getFixturePath('nestedFile2.json');
+  const nestedJsonResult = readFile('jsonResult.txt');
+  expect(gendiffCore(filepath1, filepath2, 'json')).toEqual(nestedJsonResult);
+});
