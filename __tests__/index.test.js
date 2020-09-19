@@ -19,12 +19,6 @@ test('Nested JSON files difference, stylish default formatter', () => {
   const nestedResult = readFile('nestedResult.txt');
   expect(gendiffCore(filepath1, filepath2)).toEqual(nestedResult);
 });
-test('Flat JSON files difference', () => {
-  const filepath1 = getFixturePath('file1.json');
-  const filepath2 = getFixturePath('file2.json');
-  const result = readFile('result.txt');
-  expect(gendiffCore(filepath1, filepath2)).toEqual(result);
-});
 test('Yaml files difference', () => {
   const filepath1 = getFixturePath('file1.yaml');
   const filepath2 = getFixturePath('file2.yaml');
