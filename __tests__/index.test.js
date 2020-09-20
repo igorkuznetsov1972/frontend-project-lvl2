@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 // import { dirname } from 'path';
 import path from 'path';
 import fs from 'fs';
-import { test, expect } from '@jest/globals';
+import { test, expect, describe } from '@jest/globals';
 import gendiffCore from '../src/index.js';
 import formatter from '../formatters/index.js';
 
@@ -14,54 +14,30 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
-test('Nested JSON files difference, stylish default formatter', () => {
-  const filepath1 = getFixturePath('nestedFile1.json');
-  const filepath2 = getFixturePath('nestedFile2.json');
-  const nestedResult = readFile('nestedResult.txt');
-  expect(formatter(gendiffCore(filepath1, filepath2))).toEqual(nestedResult);
+describe.each([
+  ['JSON', 'nestedFile1.json', 'nestedFile2.json', 'nestedResult.txt'],
+  ['YAML', 'file1.yaml', 'file2.yaml', 'result.txt'],
+  ['INI', 'file1.ini', 'file2.ini', 'result.txt'],
+  ['JSON', 'nestedFile1.json', 'nestedFile2.json', 'plainResult.txt', 'plain'],
+  ['JSON', 'nestedFile1.json', 'nestedFile2.json', 'jsonResult.txt', 'json'],
+])('Difference', (name, file1, file2, expected, format) => {
+  test(`${name} files, ${format || 'stylish'} output format`, () => {
+    const filepath1 = getFixturePath(file1);
+    const filepath2 = getFixturePath(file2);
+    const result = readFile(expected);
+    expect(formatter(gendiffCore(filepath1, filepath2), format)).toEqual(result);
+  });
 });
-test('Yaml files difference', () => {
-  const filepath1 = getFixturePath('file1.yaml');
-  const filepath2 = getFixturePath('file2.yaml');
-  const result = readFile('result.txt');
-  expect(formatter(gendiffCore(filepath1, filepath2))).toEqual(result);
-});
-test('ini files difference', () => {
-  const filepath1 = getFixturePath('file1.ini');
-  const filepath2 = getFixturePath('file2.ini');
-  const result = readFile('result.txt');
-  expect(formatter(gendiffCore(filepath1, filepath2))).toEqual(result);
-});
-test('Wrong file type', () => {
-  const filepath1 = getFixturePath('nestedFile1.txt');
-  const filepath2 = getFixturePath('nestedFile2.txt');
-  expect(() => {
-    formatter(gendiffCore(filepath1, filepath2));
-  }).toThrow('Invalid file type');
-});
-test('No such file', () => {
-  const filepath1 = getFixturePath('NotSuchNestedFile1.no');
-  const filepath2 = getFixturePath('NotSuchNestedFile2.no');
-  expect(() => {
-    formatter(gendiffCore(filepath1, filepath2));
-  }).toThrow('No such file or directory');
-});
-test('Invalid formatter type', () => {
-  const filepath1 = getFixturePath('nestedFile1.json');
-  const filepath2 = getFixturePath('nestedFile2.json');
-  expect(() => {
-    formatter(gendiffCore(filepath1, filepath2), 'other');
-  }).toThrow('Invalid formatter type');
-});
-test('Nested JSON files difference, plain formatter', () => {
-  const filepath1 = getFixturePath('nestedFile1.json');
-  const filepath2 = getFixturePath('nestedFile2.json');
-  const nestedPlainResult = readFile('plainResult.txt');
-  expect(formatter(gendiffCore(filepath1, filepath2), 'plain')).toEqual(nestedPlainResult);
-});
-test('Nested JSON files difference, json formatter', () => {
-  const filepath1 = getFixturePath('nestedFile1.json');
-  const filepath2 = getFixturePath('nestedFile2.json');
-  const nestedJsonResult = readFile('jsonResult.txt');
-  expect(formatter(gendiffCore(filepath1, filepath2), 'json')).toEqual(nestedJsonResult);
+describe.each([
+  ['Wrong file type', 'nestedFile1.txt', 'nestedFile2.txt', 'Invalid file type'],
+  ['No such file', 'NotSuchNestedFile1.no', 'NotSuchNestedFile2.no', 'No such file or directory'],
+  ['Invalid formatter type', 'nestedFile1.json', 'nestedFile2.json', 'Invalid formatter type', 'other'],
+])('Arguments', (name, file1, file2, error, format) => {
+  test(`${name}`, () => {
+    const filepath1 = getFixturePath(file1);
+    const filepath2 = getFixturePath(file2);
+    expect(() => {
+      formatter(gendiffCore(filepath1, filepath2), format);
+    }).toThrow(`${error}`);
+  });
 });
