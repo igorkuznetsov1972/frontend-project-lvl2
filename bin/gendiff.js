@@ -14,6 +14,6 @@ program
   .option('-f, --format [formatter]', 'output format [formatter]', 'stylish')
   .action((filePath1, filePath2) => {
     // eslint-disable-next-line no-console
-    console.log(formatter(program.format, gendiffCore(filePath1, filePath2)));
+    console.log(formatter(gendiffCore(filePath1, filePath2), program.format));
   });
 program.parse(process.argv);

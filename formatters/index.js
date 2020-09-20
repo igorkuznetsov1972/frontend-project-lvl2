@@ -4,7 +4,7 @@ import stylish from './stylish.js';
 import plain from './plain.js';
 import json from './json.js';
 
-const formatter = (formatterName = 'stylish', ast) => {
+const formatter = (ast, formatterName = 'stylish') => {
   switch (formatterName) {
     case 'stylish':
       return (stylish(ast));
