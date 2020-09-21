@@ -12,7 +12,7 @@ export default (ast) => {
         });
         result.push(`${' '.repeat(childDepth)}}\n`);
       }
-      if (!_.has(arr[1], 'state') && !_.has(arr[1], 'children')) {
+      if (!_.has(arr[1], 'modificationType') && !_.has(arr[1], 'children')) {
         if (!_.isPlainObject(arr[1])) {
           result.push(`${arr[0]}: ${arr[1]}\n`);
         }
@@ -28,8 +28,8 @@ export default (ast) => {
           result.push(`${' '.repeat(childDepth)}}\n`);
         }
       }
-      if (_.has(arr[1], 'state')) {
-        switch (arr[1].state) {
+      if (_.has(arr[1], 'modificationType')) {
+        switch (arr[1].modificationType) {
           case 'changed':
             if (_.isPlainObject(arr[1].beforeValue)) {
               result.push(`${' '.repeat(childDepth - 2)}- ${arr[0]}: {\n${' '.repeat(childDepth + 4)}`);
