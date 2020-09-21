@@ -43,7 +43,6 @@ export default (ast) => {
     return result;
   };
   _.toPairs(ast).sort().forEach((arr) => {
-    // const acc = ["Property '"];
     build(arr, ["Property '"], 1);
   });
   return result.flat().join('').trimEnd();
