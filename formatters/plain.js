@@ -10,7 +10,7 @@ export default (ast) => {
       if (_.has(arr[1], 'children')) {
         depth += 1;
         acc.push('.');
-        _.toPairs(arr[1].children).sort().filter((child) => child[1].status !== 'kept').forEach((child) => {
+        _.toPairs(arr[1].children).sort().filter((child) => child[1].state !== 'kept').forEach((child) => {
           build(child, acc);
           if (_.has(child[1], 'children')) {
             acc.pop();
@@ -19,9 +19,9 @@ export default (ast) => {
         });
       }
 
-      if (_.has(arr[1], 'status')) {
+      if (_.has(arr[1], 'state')) {
         if (depth === arr.length) acc.pop();
-        switch (arr[1].status) {
+        switch (arr[1].state) {
           case 'changed':
             if (_.isPlainObject(arr[1].beforeValue)) {
               result.push(`${acc.join('')}' was updated. From [complex value] to `);
