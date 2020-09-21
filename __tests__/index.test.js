@@ -25,7 +25,7 @@ describe.each([
     const filepath1 = getFixturePath(file1);
     const filepath2 = getFixturePath(file2);
     const result = readFile(expected);
-    expect(formatter(gendiffCore(filepath1, filepath2), format)).toEqual(result);
+    expect(gendiffCore(filepath1, filepath2, format)).toEqual(result);
   });
 });
 describe.each([
@@ -37,7 +37,7 @@ describe.each([
     const filepath1 = getFixturePath(file1);
     const filepath2 = getFixturePath(file2);
     expect(() => {
-      formatter(gendiffCore(filepath1, filepath2), format);
+      gendiffCore(filepath1, filepath2, format);
     }).toThrow(`${error}`);
   });
 });
