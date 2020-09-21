@@ -4,16 +4,13 @@ import stylish from './stylish.js';
 import plain from './plain.js';
 import json from './json.js';
 
+const formattersTable = {
+  stylish,
+  plain,
+  json,
+};
 const formatter = (ast, formatterName = 'stylish') => {
-  switch (formatterName) {
-    case 'stylish':
-      return (stylish(ast));
-    case 'plain':
-      return (plain(ast));
-    case 'json':
-      return (json(ast));
-    default:
-      throw new Error('Invalid formatter type');
-  }
+  if (formattersTable[formatterName]) return formattersTable[formatterName](ast);
+  throw new Error('Invalid formatter type');
 };
 export default formatter;
