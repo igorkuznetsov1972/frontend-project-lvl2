@@ -39,7 +39,6 @@ export default (ast) => {
       default:
         break;
     }
-    return result;
   };
   _.toPairs(ast).sort().forEach((arr) => {
     build(arr, ["Property '"], 1);
