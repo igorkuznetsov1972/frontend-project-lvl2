@@ -12,8 +12,8 @@ const gendiffCore = (filePath1, filePath2, formatterName) => {
     const fileExtention2 = path.extname(filePath2);
     const fileContent1 = parseFile(fs.readFileSync(filePath1, 'UTF-8'), fileExtention1);
     const fileContent2 = parseFile(fs.readFileSync(filePath2, 'UTF-8'), fileExtention2);
-    const result = genAST(fileContent1, fileContent2);
-    return formatter(result, formatterName);
+    const ast = genAST(fileContent1, fileContent2);
+    return formatter(ast, formatterName);
   }
   throw new Error('No such file or directory');
 };
