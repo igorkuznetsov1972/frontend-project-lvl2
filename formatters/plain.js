@@ -12,33 +12,32 @@ export default (ast) => {
         build(child, acc.slice(0, depth), depth);
       });
     }
-    if (_.has(arr[1], 'modificationType')) {
-      switch (arr[1].modificationType) {
-        case 'changed':
-          if (_.isPlainObject(arr[1].beforeValue)) {
-            result.push(`${acc.slice(0, depth).join('')}' was updated. From [complex value] to `);
-          } else if (arr[1].beforeValue === false || arr[1].beforeValue === true) {
-            result.push(`${acc.slice(0, depth).join('')}' was updated. From ${arr[1].beforeValue} to `);
-          } else result.push(`${acc.slice(0, depth).join('')}' was updated. From '${arr[1].beforeValue}' to `);
-          if (_.isPlainObject(arr[1].afterValue)) {
-            result.push('[complex value]\n');
-          } else if (arr[1].afterValue === false || arr[1].afterValue === true) {
-            result.push(`${arr[1].afterValue}\n`);
-          } else result.push(`'${arr[1].afterValue}'\n`);
-          break;
-        case 'removed':
-          result.push(`${acc.slice(0, depth).join('')}' was removed\n`);
-          break;
-        case 'added':
-          if (_.isPlainObject(arr[1].afterValue)) {
-            result.push(`${acc.join('')}' was added with value: [complex value]\n`);
-          } else if (arr[1].afterValue === false || arr[1].afterValue === true) {
-            result.push(`${acc.join('')}' was added with value: ${arr[1].afterValue}\n`);
-          } else result.push(`${acc.join('')}' was added with value: '${arr[1].afterValue}'\n`);
-          break;
-        default:
-          break;
-      }
+    if (!_.has(arr[1], 'modificationType')) return;
+    switch (arr[1].modificationType) {
+      case 'changed':
+        if (_.isPlainObject(arr[1].beforeValue)) {
+          result.push(`${acc.slice(0, depth).join('')}' was updated. From [complex value] to `);
+        } else if (arr[1].beforeValue === false || arr[1].beforeValue === true) {
+          result.push(`${acc.slice(0, depth).join('')}' was updated. From ${arr[1].beforeValue} to `);
+        } else result.push(`${acc.slice(0, depth).join('')}' was updated. From '${arr[1].beforeValue}' to `);
+        if (_.isPlainObject(arr[1].afterValue)) {
+          result.push('[complex value]\n');
+        } else if (arr[1].afterValue === false || arr[1].afterValue === true) {
+          result.push(`${arr[1].afterValue}\n`);
+        } else result.push(`'${arr[1].afterValue}'\n`);
+        break;
+      case 'removed':
+        result.push(`${acc.join('')}' was removed\n`);
+        break;
+      case 'added':
+        if (_.isPlainObject(arr[1].afterValue)) {
+          result.push(`${acc.join('')}' was added with value: [complex value]\n`);
+        } else if (arr[1].afterValue === false || arr[1].afterValue === true) {
+          result.push(`${acc.join('')}' was added with value: ${arr[1].afterValue}\n`);
+        } else result.push(`${acc.join('')}' was added with value: '${arr[1].afterValue}'\n`);
+        break;
+      default:
+        break;
     }
     return result;
   };
