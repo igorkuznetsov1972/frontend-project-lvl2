@@ -7,7 +7,7 @@ export default (ast) => {
     if (!Array.isArray(arr)) result.push(`${arr}`);
     else if (_.has(arr[1], 'children') && arr[1].type === 'unchanged') {
       result.push(`${' '.repeat(childDepth)}${arr[0]}: {\n`);
-      _.toPairs(arr[1].children).sort().forEach((child) => {
+      (arr[1].children).sort().forEach((child) => {
         build(child, childDepth + 4);
       });
       result.push(`${' '.repeat(childDepth)}}\n`);
@@ -70,7 +70,7 @@ export default (ast) => {
     }
     return result;
   };
-  _.toPairs(ast).sort().forEach((arr) => build(arr, 4));
+  ast.sort().forEach((arr) => build(arr, 4));
   result.push('}');
   return result.join('');
 };

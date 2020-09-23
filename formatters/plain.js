@@ -8,7 +8,7 @@ export default (ast) => {
     if (_.has(arr[1], 'children')) {
       depth += 1;
       acc.push('.');
-      _.toPairs(arr[1].children).sort().filter((child) => child[1].type !== 'kept').forEach((child) => {
+      (arr[1].children).sort().forEach((child) => {
         build(child, acc.slice(0, depth), depth);
       });
     }
@@ -40,7 +40,7 @@ export default (ast) => {
         break;
     }
   };
-  _.toPairs(ast).sort().forEach((arr) => {
+  ast.sort().forEach((arr) => {
     build(arr, ["Property '"], 1);
   });
   return result.flat().join('').trimEnd();
