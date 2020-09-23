@@ -10,7 +10,7 @@ const genAST = (fileContent1, fileContent2) => {
     } if (_.isEqual(fileContent1[key], fileContent2[key])) {
       return [key, { type: 'unchanged', value: fileContent1[key] }];
     } if (_.isPlainObject(fileContent1[key]) && _.isPlainObject(fileContent2[key])) {
-      return [key, { type: 'unchanged', children: (genAST(fileContent1[key], fileContent2[key])) }];
+      return [key, { type: 'nested', children: (genAST(fileContent1[key], fileContent2[key])) }];
     } if (!_.isEqual(fileContent1[key], fileContent2[key])) {
       return [key, { type: 'changed', beforeValue: fileContent1[key], afterValue: fileContent2[key] }];
     }
