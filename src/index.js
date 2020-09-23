@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import parseFile from './parsers.js';
 import genAST from './genAST.js';
-import formatter from '../formatters/index.js';
+import formatter from './formatters/index.js';
 
 const gendiffCore = (filePath1, filePath2, formatterName) => {
   if (fs.existsSync(filePath1) && fs.existsSync(filePath2)) {

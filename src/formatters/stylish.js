@@ -24,15 +24,19 @@ export default (ast) => {
       }
     };
     const childDepth = depth;
-    if (!Array.isArray(arr)) result.push(`${arr}`);
-    else if (_.has(arr[1], 'children') && arr[1].type === 'unchanged') {
-      result.push(`${' '.repeat(childDepth)}${arr[0]}: {\n`);
-      (arr[1].children).sort().forEach((child) => {
-        build(child, childDepth + 4);
-      });
-      result.push(`${' '.repeat(childDepth)}}\n`);
-    } else if (_.has(arr[1], 'type')) {
+    if (!Array.isArray(arr)) {
+      console.log(arr, depth);
+          result.push(`${arr}`);
+    }
+    else if (_.has(arr[1], 'type')) {
       switch (arr[1].type) {
+        case 'nested':
+          result.push(`${' '.repeat(childDepth)}${arr[0]}: {\n`);
+          (arr[1].children).sort().forEach((child) => {
+            build(child, childDepth + 4);
+          });
+          result.push(`${' '.repeat(childDepth)}}\n`);
+          break;
         case 'changed':
           buildRemovedString(arr[0], arr[1].beforeValue, childDepth);
           buildAddedString(arr[0], arr[1].afterValue, childDepth);
