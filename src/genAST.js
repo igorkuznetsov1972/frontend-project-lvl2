@@ -17,11 +17,11 @@ const genAST = (fileContent1, fileContent2) => {
       return [key, { type: 'added', afterValue: addChildObject(fileContent2[key]) }];
     } if (!_.has(fileContent2, key)) {
       return [key, { type: 'removed', beforeValue: addChildObject(fileContent1[key]) }];
-    } if (_.isEqual(fileContent1[key], fileContent2[key])) {
-      return [key, { type: 'unchanged', value: fileContent1[key] }];
     } if (_.isPlainObject(fileContent1[key]) && _.isPlainObject(fileContent2[key])) {
       return [key, { type: 'nested', children: (genAST(fileContent1[key], fileContent2[key])) }];
-    } return [key, { type: 'changed', beforeValue: addChildObject(fileContent1[key]), afterValue: addChildObject(fileContent2[key]) }];
+    } if (!_.isEqual(fileContent1[key], fileContent2[key])) {
+      return [key, { type: 'changed', beforeValue: addChildObject(fileContent1[key]), afterValue: addChildObject(fileContent2[key]) }];
+    } return [key, { type: 'unchanged', value: fileContent1[key] }];
   });
   fs.writeFileSync('result1.json', JSON.stringify(ast));
   return ast;
