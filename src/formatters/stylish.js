@@ -14,7 +14,7 @@ export default (ast) => {
         result.push(`${' '.repeat(passedDepth + 3)} ${pair[0]}: ${pair[1]}\n${' '.repeat(passedDepth)}}\n`);
       } else if (_.isPlainObject(value)) {
         result.push(`${' '.repeat(passedDepth - 2)}${typeMarker} ${name}: {\n`);
-        build(_.toPairs(value).flat(), depth + 4);
+        _.toPairs(value).forEach((child) => build(child, depth + 4));
         result.push(`${' '.repeat(passedDepth)}}\n`);
       } else {
         result.push(`${' '.repeat(passedDepth - 2)}${typeMarker} ${name}: ${value}\n`);
@@ -25,9 +25,6 @@ export default (ast) => {
       switch (arr[1].type) {
         case 'nested':
           buildString(arr[0], arr[1].children, childDepth);
-          break;
-        case 'child':
-          buildString(arr[0], arr[1].value, childDepth);
           break;
         case 'changed':
           buildString(arr[0], arr[1].beforeValue, childDepth, '-');
@@ -51,6 +48,10 @@ export default (ast) => {
       });
     } else if (!_.isPlainObject(arr[1])) {
       result.push(`${' '.repeat(childDepth)}${arr[0]}: ${arr[1]}\n`);
+    } else if (_.isPlainObject(arr[1])) {
+      result.push(`${' '.repeat(childDepth)}${arr[0]}: {\n`);
+      _.toPairs(arr[1]).forEach((child) => build(child, childDepth + 4));
+      result.push(`${' '.repeat(childDepth)}}\n`);
     }
     return result;
   };

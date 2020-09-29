@@ -6,7 +6,7 @@ import gendiffCore from '../src/index.js';
 const { program } = commander;
 
 program
-  .version('0.0.1')
+  .version('0.0.5')
   .description('Compares two configuration files and shows a difference.')
   .arguments('<filePath1> <filePath2>')
   .option('-f, --format [formatter]', 'output format [stylish, plain or json]', 'stylish')
