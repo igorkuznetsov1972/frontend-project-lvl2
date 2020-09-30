@@ -1,23 +1,23 @@
 import _ from 'lodash';
 
-export default (ast) => {
+export default (ast, childIndentation = 4, typeMarkerIndentation = 2) => {
   const result = ['{\n'];
   const build = (arr, depth) => {
     const buildString = (name, value, passedDepth, typeMarker = ' ') => {
       if (_.isArray(value)) {
-        result.push(`${' '.repeat(passedDepth - 2)}${typeMarker} ${name}: {\n`);
-        value.forEach((child) => build(child, depth + 4));
+        result.push(`${' '.repeat(passedDepth - typeMarkerIndentation)}${typeMarker} ${name}: {\n`);
+        value.forEach((child) => build(child, depth + childIndentation));
         result.push(`${' '.repeat(passedDepth)}}\n`);
       } else if (_.isPlainObject(value[0])) {
         const pair = _.toPairs(value[0]).flat();
-        result.push(`${' '.repeat(passedDepth - 2)}${typeMarker} ${name}: {\n`);
-        result.push(`${' '.repeat(passedDepth + 3)} ${pair[0]}: ${pair[1]}\n${' '.repeat(passedDepth)}}\n`);
+        result.push(`${' '.repeat(passedDepth - typeMarkerIndentation)}${typeMarker} ${name}: {\n`);
+        result.push(`${' '.repeat(passedDepth + childIndentation)}${pair[0]}: ${pair[1]}\n${' '.repeat(passedDepth)}}\n`);
       } else if (_.isPlainObject(value)) {
-        result.push(`${' '.repeat(passedDepth - 2)}${typeMarker} ${name}: {\n`);
-        _.toPairs(value).forEach((child) => build(child, depth + 4));
+        result.push(`${' '.repeat(passedDepth - typeMarkerIndentation)}${typeMarker} ${name}: {\n`);
+        _.toPairs(value).forEach((child) => build(child, depth + childIndentation));
         result.push(`${' '.repeat(passedDepth)}}\n`);
       } else {
-        result.push(`${' '.repeat(passedDepth - 2)}${typeMarker} ${name}: ${value}\n`);
+        result.push(`${' '.repeat(passedDepth - typeMarkerIndentation)}${typeMarker} ${name}: ${value}\n`);
       }
     };
     const childDepth = depth;
