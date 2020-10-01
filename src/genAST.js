@@ -1,8 +1,9 @@
 import _ from 'lodash';
 
 const genAST = (fileContent1, fileContent2) => {
-  const uniqueKeys = _.sortBy(_.union(_.keys(fileContent1), _.keys(fileContent2)));
-  const ast = uniqueKeys.map((key) => {
+  const uniqueKeys = _.union(_.keys(fileContent1), _.keys(fileContent2));
+  const sortedUniqueKeys = _.sortBy(uniqueKeys);
+  const ast = sortedUniqueKeys.map((key) => {
     if (!_.has(fileContent1, key)) {
       return [key, { type: 'added', afterValue: fileContent2[key] }];
     } if (!_.has(fileContent2, key)) {
