@@ -2,24 +2,22 @@ import _ from 'lodash';
 
 export default (ast) => {
   const result = [];
-  const build = (arr, acc, prevDepth) => {
+  const build = (arr, acc) => {
     acc.push(`${arr[0]}`);
-    let depth = prevDepth + 2;
     if (_.has(arr[1], 'children')) {
-      depth += 1;
       acc.push('.');
       _.sortBy((arr[1].children)).forEach((child) => {
-        build(child, acc.slice(0, depth), depth);
+        build(child, acc.slice(0, acc.length));
       });
     }
     if (!_.has(arr[1], 'type')) return;
     switch (arr[1].type) {
       case 'changed':
         if (_.isPlainObject(arr[1].beforeValue)) {
-          result.push(`${acc.slice(0, depth).join('')}' was updated. From [complex value] to `);
+          result.push(`${acc.slice(0, acc.length).join('')}' was updated. From [complex value] to `);
         } else if (arr[1].beforeValue === false || arr[1].beforeValue === true) {
-          result.push(`${acc.slice(0, depth).join('')}' was updated. From ${arr[1].beforeValue} to `);
-        } else result.push(`${acc.slice(0, depth).join('')}' was updated. From '${arr[1].beforeValue}' to `);
+          result.push(`${acc.slice(0, acc.length).join('')}' was updated. From ${arr[1].beforeValue} to `);
+        } else result.push(`${acc.slice(0, acc.length).join('')}' was updated. From '${arr[1].beforeValue}' to `);
         if (_.isPlainObject(arr[1].afterValue)) {
           result.push('[complex value]\n');
         } else if (arr[1].afterValue === false || arr[1].afterValue === true) {
@@ -40,8 +38,8 @@ export default (ast) => {
         break;
     }
   };
-  _.sortBy(ast).forEach((arr) => {
-    build(arr, ["Property '"], 1);
+  ast.forEach((arr) => {
+    build(arr, ["Property '"]);
   });
   return result.flat().join('').trimEnd();
 };
