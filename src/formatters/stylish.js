@@ -4,18 +4,21 @@ export default (ast, childIndentation = 4, typeMarkerIndentation = 2) => {
   const result = ['{\n'];
   const build = (arr, depth) => {
     const buildString = (name, value, passedDepth, typeMarker = ' ') => {
+      const buildParamName = () => result.push(`${' '.repeat(passedDepth - typeMarkerIndentation)}${typeMarker} ${name}: {\n`);
+      const closingCurlyBrace = () => result.push(`${' '.repeat(passedDepth)}}\n`);
       if (_.isArray(value)) {
-        result.push(`${' '.repeat(passedDepth - typeMarkerIndentation)}${typeMarker} ${name}: {\n`);
-        value.forEach((child) => build(child, depth + childIndentation));
-        result.push(`${' '.repeat(passedDepth)}}\n`);
+        buildParamName();
+        _.forEach(value, (child) => build(child, depth + childIndentation));
+        closingCurlyBrace();
       } else if (_.isPlainObject(value[0])) {
         const pair = _.toPairs(value[0]).flat();
-        result.push(`${' '.repeat(passedDepth - typeMarkerIndentation)}${typeMarker} ${name}: {\n`);
-        result.push(`${' '.repeat(passedDepth + childIndentation)}${pair[0]}: ${pair[1]}\n${' '.repeat(passedDepth)}}\n`);
+        buildParamName();
+        result.push(`${' '.repeat(passedDepth + childIndentation)}${pair[0]}: ${pair[1]}\n`);
+        closingCurlyBrace();
       } else if (_.isPlainObject(value)) {
-        result.push(`${' '.repeat(passedDepth - typeMarkerIndentation)}${typeMarker} ${name}: {\n`);
-        _.toPairs(value).forEach((child) => build(child, depth + childIndentation));
-        result.push(`${' '.repeat(passedDepth)}}\n`);
+        buildParamName();
+        _.forEach(_.toPairs(value), (child) => build(child, depth + childIndentation));
+        closingCurlyBrace();
       } else {
         result.push(`${' '.repeat(passedDepth - typeMarkerIndentation)}${typeMarker} ${name}: ${value}\n`);
       }
@@ -43,19 +46,19 @@ export default (ast, childIndentation = 4, typeMarkerIndentation = 2) => {
           break;
       }
     } else if (_.isPlainObject(arr)) {
-      _.toPairs(arr).forEach((child) => {
+      _.forEach(_.toPairs(arr), (child) => {
         build(child, childDepth);
       });
     } else if (!_.isPlainObject(arr[1])) {
       result.push(`${' '.repeat(childDepth)}${arr[0]}: ${arr[1]}\n`);
     } else if (_.isPlainObject(arr[1])) {
       result.push(`${' '.repeat(childDepth)}${arr[0]}: {\n`);
-      _.toPairs(arr[1]).forEach((child) => build(child, childDepth + 4));
+      _.forEach(_.toPairs(arr[1]), (child) => build(child, childDepth + 4));
       result.push(`${' '.repeat(childDepth)}}\n`);
     }
     return result;
   };
-  ast.forEach((arr) => build(arr, 4));
+  _.forEach(ast, (arr) => build(arr, childIndentation));
   result.push('}');
   return result.join('');
 };
