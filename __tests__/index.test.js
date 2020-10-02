@@ -1,9 +1,6 @@
 /* eslint-disable import/extensions */
-/* eslint-disable jest/no-commented-out-tests */
 /* eslint-disable no-underscore-dangle */
-// eslint-disable-next-line import/extensions
 import { fileURLToPath } from 'url';
-// import { dirname } from 'path';
 import path from 'path';
 import fs from 'fs';
 import { test, expect, describe } from '@jest/globals';
