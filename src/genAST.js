@@ -1,19 +1,23 @@
 import _ from 'lodash';
+import fs from 'fs';
 
 const genAST = (fileContent1, fileContent2) => {
   const uniqueKeys = _.union(_.keys(fileContent1), _.keys(fileContent2));
   const sortedUniqueKeys = _.sortBy(uniqueKeys);
   const ast = sortedUniqueKeys.map((key) => {
     if (!_.has(fileContent1, key)) {
-      return [key, { type: 'added', afterValue: fileContent2[key] }];
+      return { name: key, type: 'added', afterValue: fileContent2[key] };
     } if (!_.has(fileContent2, key)) {
-      return [key, { type: 'removed', beforeValue: fileContent1[key] }];
+      return { name: key, type: 'removed', beforeValue: fileContent1[key] };
     } if (_.isPlainObject(fileContent1[key]) && _.isPlainObject(fileContent2[key])) {
-      return [key, { type: 'nested', children: (genAST(fileContent1[key], fileContent2[key])) }];
+      return { name: key, type: 'nested', children: (genAST(fileContent1[key], fileContent2[key])) };
     } if (!_.isEqual(fileContent1[key], fileContent2[key])) {
-      return [key, { type: 'changed', beforeValue: fileContent1[key], afterValue: fileContent2[key] }];
-    } return [key, { type: 'unchanged', value: fileContent1[key] }];
+      return {
+        name: key, type: 'changed', beforeValue: fileContent1[key], afterValue: fileContent2[key]
+      };
+    } return { name: key, type: 'unchanged', value: fileContent1[key] };
   });
+  fs.writeFileSync('result1.json', JSON.stringify(ast));
   return ast;
 };
 export default genAST;
