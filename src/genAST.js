@@ -13,7 +13,7 @@ const genAST = (fileContent1, fileContent2) => {
       return { name: key, type: 'nested', children: (genAST(fileContent1[key], fileContent2[key])) };
     } if (!_.isEqual(fileContent1[key], fileContent2[key])) {
       return {
-        name: key, type: 'changed', beforeValue: fileContent1[key], afterValue: fileContent2[key]
+        name: key, type: 'changed', beforeValue: fileContent1[key], afterValue: fileContent2[key],
       };
     } return { name: key, type: 'unchanged', value: fileContent1[key] };
   });
