@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import fs from 'fs';
 
 const genAST = (fileContent1, fileContent2) => {
   const uniqueKeys = _.union(_.keys(fileContent1), _.keys(fileContent2));
@@ -17,7 +16,6 @@ const genAST = (fileContent1, fileContent2) => {
       };
     } return { name: key, type: 'unchanged', value: fileContent1[key] };
   });
-  fs.writeFileSync('result1.json', JSON.stringify(ast));
   return ast;
 };
 export default genAST;

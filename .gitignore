@@ -3,5 +3,4 @@ node_modules
 dist
 coverage
 .eslintrc.js
-result1.json
 .vscode
