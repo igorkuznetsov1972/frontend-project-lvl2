@@ -6,11 +6,10 @@ export default (ast) => {
     acc.push(`${obj.name}`);
     if (_.has(obj, 'children')) {
       acc.push('.');
-      _.sortBy((obj.children)).forEach((child) => {
+      _.forEach(_.sortBy(obj.children), (child) => {
         buildPlainOutput(child, acc.slice(0, acc.length));
       });
     }
-    if (!_.has(obj, 'type')) return;
     const buildString = (value, status, eol) => {
       if (_.isPlainObject(value)) {
         result.push(`${acc.slice(0, acc.length).join('')}' ${status} [complex value]${eol}`);
