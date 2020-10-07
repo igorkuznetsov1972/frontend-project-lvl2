@@ -1,5 +1,3 @@
-/* eslint-disable import/extensions */
-/* eslint-disable no-console */
 import fs from 'fs';
 import path from 'path';
 import parseFile from './parsers.js';
