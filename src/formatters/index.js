@@ -9,8 +9,8 @@ const formattersTable = {
   plain,
   json,
 };
-const formatter = (ast, formatterName = 'stylish') => {
+const format = (ast, formatterName = 'stylish') => {
   if (formattersTable[formatterName]) return formattersTable[formatterName](ast);
   throw new Error('Invalid formatter type');
 };
-export default formatter;
+export default format;
