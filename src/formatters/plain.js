@@ -12,10 +12,10 @@ export default (ast) => {
     }
     const buildString = (value, status, eol) => {
       if (_.isPlainObject(value)) {
-        result.push(`${acc.slice().join('')}' ${status} [complex value]${eol}`);
+        result.push(`${acc.join('')}' ${status} [complex value]${eol}`);
       } else if (value === false || value === true) {
-        result.push(`${acc.slice().join('')}' ${status} ${value}${eol}`);
-      } else result.push(`${acc.slice().join('')}' ${status} '${value}'${eol}`);
+        result.push(`${acc.join('')}' ${status} ${value}${eol}`);
+      } else result.push(`${acc.join('')}' ${status} '${value}'${eol}`);
     };
     switch (obj.type) {
       case 'changed':
