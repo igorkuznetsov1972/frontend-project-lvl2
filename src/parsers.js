@@ -7,7 +7,7 @@ const parsersTable = {
   '.yml': yaml.safeLoad,
   '.ini': ini.parseString,
 };
-export default (fileContent, fileExtention) => {
-  if (parsersTable[fileExtention]) return parsersTable[fileExtention](fileContent);
+export default (inputData, fileExtention) => {
+  if (parsersTable[fileExtention]) return parsersTable[fileExtention](inputData);
   throw new Error('Invalid file type');
 };

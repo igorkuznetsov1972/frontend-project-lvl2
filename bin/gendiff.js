@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 import commander from 'commander';
 // eslint-disable-next-line import/extensions
-import gendiffCore from '../src/index.js';
+import gendiff from '../src/index.js';
 
 const { program } = commander;
 
@@ -12,6 +12,6 @@ program
   .option('-f, --format [formatter]', 'output format [stylish, plain or json]', 'stylish')
   .action((filePath1, filePath2) => {
     // eslint-disable-next-line no-console
-    console.log(gendiffCore(filePath1, filePath2, program.format));
+    console.log(gendiff(filePath1, filePath2, program.format));
   });
 program.parse(process.argv);
