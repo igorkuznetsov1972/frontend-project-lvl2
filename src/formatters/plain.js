@@ -7,15 +7,15 @@ export default (ast) => {
     if (_.has(obj, 'children')) {
       acc.push('.');
       _.forEach(_.sortBy(obj.children), (child) => {
-        buildPlainOutput(child, acc.slice(0, acc.length));
+        buildPlainOutput(child, acc.slice());
       });
     }
     const buildString = (value, status, eol) => {
       if (_.isPlainObject(value)) {
-        result.push(`${acc.slice(0, acc.length).join('')}' ${status} [complex value]${eol}`);
+        result.push(`${acc.slice().join('')}' ${status} [complex value]${eol}`);
       } else if (value === false || value === true) {
-        result.push(`${acc.slice(0, acc.length).join('')}' ${status} ${value}${eol}`);
-      } else result.push(`${acc.slice(0, acc.length).join('')}' ${status} '${value}'${eol}`);
+        result.push(`${acc.slice().join('')}' ${status} ${value}${eol}`);
+      } else result.push(`${acc.slice().join('')}' ${status} '${value}'${eol}`);
     };
     switch (obj.type) {
       case 'changed':
