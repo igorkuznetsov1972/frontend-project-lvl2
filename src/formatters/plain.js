@@ -2,12 +2,13 @@ import _ from 'lodash';
 
 export default (ast) => {
   const result = [];
-  const buildPlainOutput = (obj, acc) => {
-    acc.push(`${obj.name}`);
-    if (_.has(obj, 'children')) {
+  const buildPlainOutput = (acc, obj) => {
+    const { name, type, children = false } = obj;
+    acc.push(`${name}`);
+    if (children) {
       acc.push('.');
-      _.forEach(_.sortBy(obj.children), (child) => {
-        buildPlainOutput(child, acc.slice());
+      _.forEach(_.sortBy(children), (child) => {
+        buildPlainOutput(acc.slice(), child);
       });
     }
     const buildString = (value, status, eol) => {
@@ -17,7 +18,7 @@ export default (ast) => {
         result.push(`${acc.join('')}' ${status} ${value}${eol}`);
       } else result.push(`${acc.join('')}' ${status} '${value}'${eol}`);
     };
-    switch (obj.type) {
+    switch (type) {
       case 'changed':
         buildString(obj.beforeValue, 'was updated. From', ' to ');
         if (_.isPlainObject(obj.afterValue)) {
@@ -37,7 +38,7 @@ export default (ast) => {
     }
   };
   ast.forEach((obj) => {
-    buildPlainOutput(obj, ["Property '"]);
+    buildPlainOutput(["Property '"], obj);
   });
   return result.flat().join('').trimEnd();
 };
