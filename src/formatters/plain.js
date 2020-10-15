@@ -1,44 +1,33 @@
 import _ from 'lodash';
 
+const buildValue = (value) => {
+  if (_.isPlainObject(value)) {
+    return '[complex value]';
+  } if (value === false || value === true) {
+    return `${value}`;
+  } return `'${value}'`;
+};
+
 export default (ast) => {
-  const result = [];
-  const buildPlainOutput = (acc, obj) => {
-    const { name, type, children = false } = obj;
-    acc.push(`${name}`);
-    if (children) {
-      acc.push('.');
-      _.forEach(_.sortBy(children), (child) => {
-        buildPlainOutput(acc.slice(), child);
-      });
-    }
-    const buildString = (value, status, eol) => {
-      if (_.isPlainObject(value)) {
-        result.push(`${acc.join('')}' ${status} [complex value]${eol}`);
-      } else if (value === false || value === true) {
-        result.push(`${acc.join('')}' ${status} ${value}${eol}`);
-      } else result.push(`${acc.join('')}' ${status} '${value}'${eol}`);
-    };
+  const buildPlainOutput = (obj, ancestry) => obj.map((node) => {
+    const {
+      name, children, type, beforeValue, afterValue,
+    } = node;
+    const ancestryPath = ancestry === '' ? `${name}` : `${ancestry}.${name}`;
     switch (type) {
+      case 'unchanged':
+        return null;
+      case 'nested':
+        return buildPlainOutput(children, ancestryPath);
       case 'changed':
-        buildString(obj.beforeValue, 'was updated. From', ' to ');
-        if (_.isPlainObject(obj.afterValue)) {
-          result.push('[complex value]\n');
-        } else if (obj.afterValue === false || obj.afterValue === true) {
-          result.push(`${obj.afterValue}\n`);
-        } else result.push(`'${obj.afterValue}'\n`);
-        break;
+        return `Property '${ancestryPath}' was updated. From ${buildValue(beforeValue)} to ${buildValue(afterValue)}\n`;
       case 'removed':
-        result.push(`${acc.join('')}' was removed\n`);
-        break;
+        return `Property '${ancestryPath}' was removed\n`;
       case 'added':
-        buildString(obj.afterValue, 'was added with value:', '\n');
-        break;
+        return `Property '${ancestryPath}' was added with value: ${buildValue(afterValue)}\n`;
       default:
-        break;
+        return new Error(`${type} is not a valid node type`);
     }
-  };
-  ast.forEach((obj) => {
-    buildPlainOutput(["Property '"], obj);
   });
-  return result.flat().join('').trimEnd();
+  return _.flattenDeep(buildPlainOutput(ast, '')).join('').trimEnd();
 };
