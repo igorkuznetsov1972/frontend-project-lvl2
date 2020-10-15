@@ -12,8 +12,7 @@ const getFixturePath = (fileName) => path.join(__dirname, '..', '__fixtures__', 
 const readFile = (fileName) => fs.readFileSync(getFixturePath(fileName), 'utf-8');
 describe.each([
   ['JSON', 'nestedFile1.json', 'nestedFile2.json', 'nestedResult.txt'],
-  ['YAML', 'file1.yaml', 'file2.yaml', 'result.txt'],
-  ['INI', 'file1.ini', 'file2.ini', 'result.txt'],
+  ['YAML', 'nestedFile1.yml', 'nestedFile2.yml', 'nestedYamlResult.txt'],
   ['JSON', 'nestedFile1.json', 'nestedFile2.json', 'plainResult.txt', 'plain'],
   ['JSON', 'nestedFile1.json', 'nestedFile2.json', 'jsonResult.txt', 'json'],
 ])('Difference', (name, fileName1, fileName2, expected, format) => {
@@ -25,9 +24,8 @@ describe.each([
   });
 });
 describe.each([
-  ['Wrong file type', 'nestedFile1.txt', 'nestedFile2.txt', 'Invalid file type'],
-  ['No such file', 'NotSuchNestedFile1.no', 'NotSuchNestedFile2.no', 'No such file or directory'],
-  ['Invalid formatter type', 'nestedFile1.json', 'nestedFile2.json', 'Invalid formatter type', 'other'],
+  ['Wrong file type', 'nestedFile1.txt', 'nestedFile2.txt', 'This program can not compare *.txt files'],
+  ['Invalid formatter type', 'nestedFile1.json', 'nestedFile2.json', '"doc" - no such formatter type', 'doc'],
 ])('Arguments', (name, fileName1, fileName2, error, format) => {
   test(`${name}`, () => {
     const filePath1 = getFixturePath(fileName1);
