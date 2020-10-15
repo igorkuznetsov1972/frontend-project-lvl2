@@ -11,6 +11,6 @@ const formattersTable = {
 };
 const format = (ast, formatterName = 'stylish') => {
   if (formattersTable[formatterName]) return formattersTable[formatterName](ast);
-  throw new Error('Invalid formatter type');
+  throw new Error(`"${formatterName}" - no such formatter type`);
 };
 export default format;

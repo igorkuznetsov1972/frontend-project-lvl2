@@ -9,5 +9,5 @@ const parsersTable = {
 };
 export default (inputData, fileExtention) => {
   if (parsersTable[fileExtention]) return parsersTable[fileExtention](inputData);
-  throw new Error('Invalid file type');
+  throw new Error(`This program can not compare *${fileExtention} files`);
 };
