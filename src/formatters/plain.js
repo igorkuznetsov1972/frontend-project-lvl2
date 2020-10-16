@@ -1,11 +1,8 @@
 import _ from 'lodash';
 
 const buildValue = (value) => {
-  if (_.isPlainObject(value)) {
-    return '[complex value]';
-  } if (value === false || value === true) {
-    return `${value}`;
-  } return `'${value}'`;
+  if (_.isPlainObject(value)) return '[complex value]';
+  return _.isString(value) ? `'${value}'` : `${value}`;
 };
 
 export default (ast) => {
