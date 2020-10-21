@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const buildValue = (value) => {
+const buildString = (value) => {
   if (_.isPlainObject(value)) return '[complex value]';
   return _.isString(value) ? `'${value}'` : `${value}`;
 };
@@ -17,11 +17,11 @@ export default (ast) => {
       case 'nested':
         return buildPlainOutput(children, ancestryPath);
       case 'changed':
-        return `Property '${ancestryPath}' was updated. From ${buildValue(beforeValue)} to ${buildValue(afterValue)}\n`;
+        return `Property '${ancestryPath}' was updated. From ${buildString(beforeValue)} to ${buildString(afterValue)}\n`;
       case 'removed':
         return `Property '${ancestryPath}' was removed\n`;
       case 'added':
-        return `Property '${ancestryPath}' was added with value: ${buildValue(afterValue)}\n`;
+        return `Property '${ancestryPath}' was added with value: ${buildString(afterValue)}\n`;
       default:
         return new Error(`${type} is not a valid node type`);
     }

@@ -7,7 +7,7 @@ const parsersTable = {
   '.yml': yaml.safeLoad,
   '.ini': ini.parseString,
 };
-export default (inputData, fileExtention) => {
-  if (parsersTable[fileExtention]) return parsersTable[fileExtention](inputData);
-  throw new Error(`This program can not compare *${fileExtention} files`);
+export default (ast, fileExtention) => {
+  if (!parsersTable[fileExtention]) throw new Error(`This program can not compare *${fileExtention} files`);
+  return parsersTable[fileExtention](ast);
 };

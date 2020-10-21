@@ -10,7 +10,7 @@ const formattersTable = {
   json,
 };
 const format = (ast, formatterName = 'stylish') => {
-  if (formattersTable[formatterName]) return formattersTable[formatterName](ast);
-  throw new Error(`"${formatterName}" - no such formatter type`);
+  if (!formattersTable[formatterName]) throw new Error(`"${formatterName}" - no such formatter type`);
+  return formattersTable[formatterName](ast);
 };
 export default format;
