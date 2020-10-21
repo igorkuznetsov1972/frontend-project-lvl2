@@ -1,6 +1,5 @@
 #! /usr/bin/env node
 import commander from 'commander';
-// eslint-disable-next-line import/extensions
 import gendiff from '../src/index.js';
 
 const { program } = commander;
