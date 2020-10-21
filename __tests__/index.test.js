@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
 import { test, expect, describe } from '@jest/globals';
-import gendiffCore from '../src/index.js';
+import gendiff from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,7 +20,7 @@ describe.each([
     const filePath1 = getFixturePath(fileName1);
     const filePath2 = getFixturePath(fileName2);
     const result = readFile(expected);
-    expect(gendiffCore(filePath1, filePath2, format)).toEqual(result);
+    expect(gendiff(filePath1, filePath2, format)).toEqual(result);
   });
 });
 describe.each([
@@ -31,7 +31,7 @@ describe.each([
     const filePath1 = getFixturePath(fileName1);
     const filePath2 = getFixturePath(fileName2);
     expect(() => {
-      gendiffCore(filePath1, filePath2, format);
+      gendiff(filePath1, filePath2, format);
     }).toThrow(`${error}`);
   });
 });
