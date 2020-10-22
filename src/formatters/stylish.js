@@ -1,33 +1,32 @@
 import _ from 'lodash';
 
-export default (ast, childIndentation = 4, typeMarkerIndentation = 2) => {
+export default (ast) => {
   const buildStylishOutput = (arr, depth) => arr.flatMap((node) => {
     const {
       name, value, children, type, beforeValue, afterValue,
     } = node;
-
-    const buildString = (paramName, paramValue, passedDepth, typeMarker = ' ') => {
-      const buildParamName = `${' '.repeat(passedDepth - typeMarkerIndentation)}${typeMarker} ${paramName}: {\n`;
-      const closingCurlyBrace = `${' '.repeat(passedDepth)}}\n`;
+    const buildIndentation = (passedDepth) => `${' '.repeat(passedDepth)}`;
+    const buildString = (paramValue, passedDepth) => {
+      const closingCurlyBrace = `${buildIndentation(passedDepth)}}\n`;
       if (_.isPlainObject(paramValue)) {
-        return `${buildParamName}${Object.entries(paramValue).flatMap(([key, nestedValue]) => buildString(key, nestedValue, passedDepth + childIndentation)).join('')}${closingCurlyBrace}`;
-      } return `${' '.repeat(passedDepth - typeMarkerIndentation)}${typeMarker} ${paramName}: ${paramValue}\n`;
+        return `{\n${Object.entries(paramValue).flatMap(([key, nestedValue]) => `${buildIndentation(passedDepth + 4)}${key}: ${buildString(nestedValue, passedDepth + 4)}`).join('')}${closingCurlyBrace}`;
+      } return `${paramValue}\n`;
     };
 
     switch (type) {
       case 'nested':
-        return `${' '.repeat(depth)}${name}: {\n${buildStylishOutput(children, depth + childIndentation).join('')}${' '.repeat(depth)}}\n`;
+        return `${buildIndentation(depth)}${name}: {\n${buildStylishOutput(children, depth + 4).join('')}${' '.repeat(depth)}}\n`;
       case 'changed':
-        return `${buildString(name, beforeValue, depth, '-')}${buildString(name, afterValue, depth, '+')}`;
+        return `${buildIndentation(depth - 2)}- ${name}: ${buildString(beforeValue, depth)}${buildIndentation(depth - 2)}+ ${name}: ${buildString(afterValue, depth)}`;
       case 'unchanged':
-        return `${buildString(name, value, depth)}`;
+        return `${buildIndentation(depth)}${name}: ${buildString(value, depth)}`;
       case 'added':
-        return `${buildString(name, afterValue, depth, '+')}`;
+        return `${buildIndentation(depth - 2)}+ ${name}: ${buildString(afterValue, depth)}`;
       case 'removed':
-        return `${buildString(name, beforeValue, depth, '-')}`;
+        return `${buildIndentation(depth - 2)}- ${name}: ${buildString(beforeValue, depth)}`;
       default:
         return new Error(`${type} is not a valid node type`);
     }
   });
-  return `{\n${buildStylishOutput(ast, childIndentation).join('').trimEnd()}\n}`;
+  return `{\n${buildStylishOutput(ast, 4).join('').trimEnd()}\n}`;
 };
