@@ -5,7 +5,7 @@ const stringifyValue = (value) => {
   return _.isString(value) ? `'${value}'` : `${value}`;
 };
 
-export default (ast) => {
+export default (data) => {
   const buildPlainOutput = (obj, ancestry) => obj.map((node) => {
     const {
       name, children, type, beforeValue, afterValue,
@@ -17,14 +17,14 @@ export default (ast) => {
       case 'nested':
         return buildPlainOutput(children, ancestryPath);
       case 'changed':
-        return `Property '${ancestryPath}' was updated. From ${stringifyValue(beforeValue)} to ${stringifyValue(afterValue)}\n`;
+        return `Property '${ancestryPath}' was updated. From ${stringifyValue(beforeValue)} to ${stringifyValue(afterValue)}`;
       case 'removed':
-        return `Property '${ancestryPath}' was removed\n`;
+        return `Property '${ancestryPath}' was removed`;
       case 'added':
-        return `Property '${ancestryPath}' was added with value: ${stringifyValue(afterValue)}\n`;
+        return `Property '${ancestryPath}' was added with value: ${stringifyValue(afterValue)}`;
       default:
         return new Error(`${type} is not a valid node type`);
     }
   });
-  return _.flattenDeep(buildPlainOutput(ast, '')).join('').trimEnd();
+  return _.pull(_.flattenDeep(buildPlainOutput(data, '')), null).join('\n');
 };
