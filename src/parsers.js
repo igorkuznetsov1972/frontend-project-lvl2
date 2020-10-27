@@ -9,5 +9,5 @@ const parsersTable = {
 };
 export default (data, fileExtention) => {
   if (!parsersTable[fileExtention]) throw new Error(`This program can not compare *${fileExtention} files`);
-  return parsersTable[fileExtention](ast);
+  return parsersTable[fileExtention](data);
 };
