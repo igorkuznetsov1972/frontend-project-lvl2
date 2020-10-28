@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
-import parse from './parsers.js';
-import genAST from './genAST.js';
-import format from './formatters/index.js';
+import parse from './src/parsers.js';
+import genAST from './src/genAST.js';
+import format from './src/formatters/index.js';
 
 const gendiff = (filePath1, filePath2, formatterName) => {
   const fileExtention1 = path.extname(filePath1);
