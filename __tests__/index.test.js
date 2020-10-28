@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 /* eslint-disable no-underscore-dangle */
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -10,6 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const getFixturePath = (fileName) => path.join(__dirname, '..', '__fixtures__', fileName);
 const readFile = (fileName) => fs.readFileSync(getFixturePath(fileName), 'utf-8');
+
 describe.each([
   ['JSON', 'nestedFile1.json', 'nestedFile2.json', 'nestedResult.txt'],
   ['YAML', 'nestedFile1.yml', 'nestedFile2.yml', 'nestedYamlResult.txt'],
@@ -23,6 +23,7 @@ describe.each([
     expect(gendiff(filePath1, filePath2, format)).toEqual(result);
   });
 });
+
 describe.each([
   ['Wrong file type', 'nestedFile1.txt', 'nestedFile2.txt', 'This program can not compare *.txt files'],
   ['Invalid formatter type', 'nestedFile1.json', 'nestedFile2.json', '"doc" - no such formatter type', 'doc'],
