@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 export default (ast) => {
-  const buildStylishOutput = (arr, depth) => arr.map((node) => {
+  const buildStylishDiff = (arr, depth) => arr.map((node) => {
     const {
       name, value, children, type, beforeValue, afterValue,
     } = node;
@@ -15,7 +15,7 @@ export default (ast) => {
 
     switch (type) {
       case 'nested':
-        return [`${buildIndentation(depth)}${name}: {`, buildStylishOutput(children, depth + 4), `${' '.repeat(depth)}}`];
+        return [`${buildIndentation(depth)}${name}: {`, buildStylishDiff(children, depth + 4), `${' '.repeat(depth)}}`];
       case 'changed':
         return [`${buildIndentation(depth - 2)}- ${name}: ${buildString(beforeValue, depth)}`, `${buildIndentation(depth - 2)}+ ${name}: ${buildString(afterValue, depth)}`];
       case 'unchanged':
@@ -28,6 +28,6 @@ export default (ast) => {
         return new Error(`${type} is not a valid node type`);
     }
   });
-  console.log(buildStylishOutput(ast, 4));
-  return `{\n${_.flattenDeep(buildStylishOutput(ast, 4)).join('\n')}\n}`;
+  console.log(buildStylishDiff(ast, 4));
+  return `{\n${_.flattenDeep(buildStylishDiff(ast, 4)).join('\n')}\n}`;
 };
