@@ -9,6 +9,7 @@ This repository is created as a second training project by Igor Kuznetsov studyi
 [![Linter&Tests](https://github.com/igorkuznetsov1972/frontend-project-lvl2/workflows/LinterJestCoverage/badge.svg?branch=master)](https://github.com/igorkuznetsov1972/frontend-project-lvl2/actions?query=workflow%3ALinterJestCoverage)
 
 gendiff is a command line utility that compares two config files and prints the difference.
+To install gendiff clone this repository and run "make install".
 Here is how it works with JSONs\
 <a href="https://asciinema.org/a/asZt6VeL7Dg33YuLeap7PHYeg" target="_blank"><img src="https://asciinema.org/a/asZt6VeL7Dg33YuLeap7PHYeg.svg" width="500" /></a>
 
