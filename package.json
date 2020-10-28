@@ -1,5 +1,5 @@
 {
-  "name": "frontend-project-lvl2",
+  "name": "@gorkuznetsov1972/frontend-project-lvl2",
   "version": "1.0.0",
   "description": "Hexlet Frontend course project #2",
   "scripts": {
@@ -18,7 +18,7 @@
     "frontend",
     "project#2"
   ],
-  "main": "./src/index.js",
+  "main": "./index.js",
   "bin": {
     "gendiff": "./bin/gendiff.js"
   },
