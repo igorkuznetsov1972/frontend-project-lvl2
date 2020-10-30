@@ -28,6 +28,6 @@ export default (ast) => {
         return new Error(`${type} is not a valid node type`);
     }
   });
-  console.log(buildStylishDiff(ast, 4));
+
   return `{\n${_.flattenDeep(buildStylishDiff(ast, 4)).join('\n')}\n}`;
 };
