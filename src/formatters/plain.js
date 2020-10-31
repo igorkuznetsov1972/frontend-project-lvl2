@@ -6,7 +6,7 @@ const stringifyValue = (value) => {
 };
 
 export default (data) => {
-  const buildPlainDiff = (obj, ancestry) => obj.map((node) => {
+  const stringify = (obj, ancestry) => obj.map((node) => {
     const {
       name, children, type, beforeValue, afterValue,
     } = node;
@@ -15,7 +15,7 @@ export default (data) => {
       case 'unchanged':
         return null;
       case 'nested':
-        return buildPlainDiff(children, ancestryPath);
+        return stringify(children, ancestryPath);
       case 'changed':
         return `Property '${ancestryPath}' was updated. From ${stringifyValue(beforeValue)} to ${stringifyValue(afterValue)}`;
       case 'removed':
@@ -26,5 +26,5 @@ export default (data) => {
         return new Error(`${type} is not a valid node type`);
     }
   });
-  return _.pull(_.flattenDeep(buildPlainDiff(data, '')), null).join('\n');
+  return _.pull(_.flattenDeep(stringify(data, '')), null).join('\n');
 };
