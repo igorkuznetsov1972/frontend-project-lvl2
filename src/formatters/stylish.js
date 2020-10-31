@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 export default (ast) => {
-  const buildStylishDiff = (arr, depth) => arr.map((node) => {
+  const stringify = (arr, depth) => arr.map((node) => {
     const {
       name, value, children, type, beforeValue, afterValue,
     } = node;
@@ -10,12 +10,12 @@ export default (ast) => {
       const closingCurlyBrace = `${buildIndentation(passedDepth)}}`;
       if (_.isPlainObject(paramValue)) {
         return _.flattenDeep(['{', Object.entries(paramValue).map(([key, nestedValue]) => [`${buildIndentation(passedDepth + 4)}${key}: ${buildString(nestedValue, passedDepth + 4)}`]), `${closingCurlyBrace}`]).join('\n');
-      } return `${paramValue}`;
+      } return paramValue;
     };
 
     switch (type) {
       case 'nested':
-        return [`${buildIndentation(depth)}${name}: {`, buildStylishDiff(children, depth + 4), `${' '.repeat(depth)}}`];
+        return [`${buildIndentation(depth)}${name}: {`, stringify(children, depth + 4), `${' '.repeat(depth)}}`];
       case 'changed':
         return [`${buildIndentation(depth - 2)}- ${name}: ${buildString(beforeValue, depth)}`, `${buildIndentation(depth - 2)}+ ${name}: ${buildString(afterValue, depth)}`];
       case 'unchanged':
@@ -29,5 +29,5 @@ export default (ast) => {
     }
   });
 
-  return `{\n${_.flattenDeep(buildStylishDiff(ast, 4)).join('\n')}\n}`;
+  return `{\n${_.flattenDeep(stringify(ast, 4)).join('\n')}\n}`;
 };
