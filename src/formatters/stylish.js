@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-export default (ast) => {
+export default (data) => {
   const stringify = (arr, depth, indent = 4) => arr.map((node) => {
     const {
       name, value, children, type, beforeValue, afterValue,
@@ -30,5 +30,5 @@ export default (ast) => {
     }
   });
 
-  return `{\n${_.flattenDeep(stringify(ast, 1)).join('\n')}\n}`;
+  return `{\n${_.flattenDeep(stringify(data, 1)).join('\n')}\n}`;
 };
