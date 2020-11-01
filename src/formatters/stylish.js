@@ -1,7 +1,8 @@
 import _ from 'lodash';
 
 export default (ast) => {
-  const stringify = (arr, depth, indent = 4) => arr.map((node) => {
+  const stringify = (arr, depth) => arr.map((node) => {
+    const indent = 4;
     const {
       name, value, children, type, beforeValue, afterValue,
     } = node;
