@@ -17,11 +17,15 @@ export default (data) => {
       case 'nested':
         return stringify(children, ancestryPath);
       case 'changed':
-        return `Property '${ancestryPath}' was updated. From ${stringifyValue(beforeValue)} to ${stringifyValue(afterValue)}`;
+        return `Property '${ancestryPath}' was updated. From ${stringifyValue(
+          beforeValue,
+        )} to ${stringifyValue(afterValue)}`;
       case 'removed':
         return `Property '${ancestryPath}' was removed`;
       case 'added':
-        return `Property '${ancestryPath}' was added with value: ${stringifyValue(afterValue)}`;
+        return `Property '${ancestryPath}' was added with value: ${stringifyValue(
+          afterValue,
+        )}`;
       default:
         return new Error(`${type} is not a valid node type`);
     }
