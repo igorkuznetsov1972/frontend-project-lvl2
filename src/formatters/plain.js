@@ -30,5 +30,5 @@ export default (data) => {
         return new Error(`${type} is not a valid node type`);
     }
   });
-  return _.pull(_.flattenDeep(stringify(data, '')), null).join('\n');
+  return _.flattenDeep(stringify(data, '')).filter((str) => str !== null).join('\n');
 };
