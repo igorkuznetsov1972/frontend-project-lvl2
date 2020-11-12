@@ -2,7 +2,6 @@ plugins:
   # https://github.com/jest-community/eslint-plugin-jest
   - jest
 env:
-  browser: true
   es2020: true
 extends:
   - airbnb-base
