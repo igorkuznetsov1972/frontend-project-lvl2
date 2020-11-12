@@ -12,11 +12,12 @@ const readFile = (fileName) => fs.readFileSync(getFixturePath(fileName), 'utf-8'
 
 describe.each([
   ['JSON', 'nestedFile1.json', 'nestedFile2.json', 'nestedResult.txt'],
-  ['YAML', 'nestedFile1.yml', 'nestedFile2.yml', 'nestedYamlResult.txt'],
+  ['YAML', 'nestedFile1.yml', 'nestedFile2.yml', 'nestedYamlResult.txt', 'stylish'],
+  ['JSON', 'nestedFile1.json', 'nestedFile2.json', 'nestedResult.txt', 'stylish'],
   ['JSON', 'nestedFile1.json', 'nestedFile2.json', 'plainResult.txt', 'plain'],
   ['JSON', 'nestedFile1.json', 'nestedFile2.json', 'jsonResult.txt', 'json'],
 ])('Difference', (name, fileName1, fileName2, expected, format) => {
-  test(`${name} files, ${format || 'stylish'} output format`, () => {
+  test(`${name} files, ${format || 'default'} output format`, () => {
     const filePath1 = getFixturePath(fileName1);
     const filePath2 = getFixturePath(fileName2);
     const result = readFile(expected);
